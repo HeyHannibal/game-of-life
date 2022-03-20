@@ -15,30 +15,77 @@ function Grid(props) {
 
   function generateGrid(N) {
     const board = [];
-    for (let i = 0; i < N * N; i++) {
-      board.push([null]);
+    for (let i = 0; i < N; i++) {
+      const row = [];
+      for (let i = 0; i < N; i++) {
+        row.push(0);
+      }
+      board.push(row);
     }
     return board;
   }
 
- 
+  function tick() {
+    console.log(gridOfLife)
+    let newTick = gridOfLife.map((column, colIndex, rowArr) => {
+      return column.map((cell, index, cellArr) => {
+        let neighbourCount = 0 - cell;
+        for (let i = colIndex - 1; i <= colIndex + 1; i++) {
+          for (let j = index - 1; j <= index + 1; j++) {
+            if ((i >= 0 && j >= 0) && (i < rowArr.length && j < cellArr.length)) {
+              neighbourCount += gridOfLife[i][j]
+            }
+          }
+        } 
+        if(cell === 1) {
+          if (neighbourCount < 2) return 0;
+          if (neighbourCount === 2 || neighbourCount === 3) return 1;
+          if (neighbourCount > 3) return 0
+        }
+        if(cell === 0) {
+          if(neighbourCount === 3) return 1
+          else return 0
+        }
+      });
+    });
 
-   function setStage(e) {
-    const newGrid = [...gridOfLife]
-    newGrid[e.target.id] = 1
-    setGridOfLife(newGrid)
-  }   
- 
+    setGridOfLife(newTick);
+  }
 
-  const grid = gridOfLife.map((cell, index) => {
-    return (cell === 1) ? <div id={index} className='cell alive' onClick={setStage}>■</div> : 
-                          <div id={index} className='cell ' onClick={setStage}>■</div> ;
+  function setStage(e) {
+    const indexes = e.target.id.split("-");
+    // let nIndex = indexes.map(string => Number(string))
+    console.log(indexes);
+    const newGrid = [...gridOfLife];
+    newGrid[indexes[0]][indexes[1]] = 1;
+    setGridOfLife(newGrid);
+  }
+
+  const grid = gridOfLife.map((row, index) => {
+    return row.map((cell, indexes) => {
+      return cell === 1 ? (
+        <div
+          id={index + "-" + indexes}
+          className="cell alive"
+          onClick={setStage}
+        >
+          ■
+        </div>
+      ) : (
+        <div id={index + "-" + indexes} className="cell " onClick={setStage}>
+          ■
+        </div>
+      );
+    });
   });
 
-
   return (
-    <div id="grid" style={gridStyle}>
-      {grid}
+    <div>
+      <button onClick={tick}>Tick</button>
+
+      <div id="grid" style={gridStyle}>
+        {grid}
+      </div>
     </div>
   );
 }

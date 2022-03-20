@@ -17,12 +17,12 @@ export default function UI(props) {
       <Box sx={{ width: 300 }}>
         <Slider
           aria-label="Temperature"
-          defaultValue={10}
+          defaultValue={4}
           getAriaValueText={valuetext}
           valueLabelDisplay="auto"
           step={10}
           marks
-          min={40}
+          min={10}
           max={80}
         />
         {/* <Slider defaultValue={30} step={10} marks min={10} max={110} disabled /> */}

@@ -6,22 +6,18 @@ import Grid from './components/grid'
 
 function App() {
 
+
   const [gameOn, setGameOn] = useState(false)
   const [gridSize, setGridSize] = useState(0)
 
   const runGame = () => (gameOn) ? setGameOn(false) : setGameOn(true)
-
   const setSize = (value) => setGridSize(value)
-
-  useEffect(() => {
-    console.log(gameOn)
-  }, [gridSize, gameOn])
 
   return (
     <div className="App">
       {(gameOn) ? <h1>On</h1> : <h1>Off</h1>}
       <UI setSize={setSize} runGame={runGame}/>
-      <Grid gridSize={gridSize} gameOn={gameOn}/>
+      <Grid gridSize={gridSize} gameOn={gameOn} />
       </div>
   );
 }
