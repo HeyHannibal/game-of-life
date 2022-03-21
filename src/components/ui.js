@@ -5,19 +5,26 @@ export default function UI(props) {
   function valuetext(value) {
     props.setSize(value);
 
-    return `${value}°C`;
+    return `${value}`;
+  }
+
+  function speed(value) {
+    props.setDelay(value)
+    return `${value}`
   }
 
   function runGame() {
     props.runGame()
   }
 
+
+
   return (
     <div id='ui'>
       <Box sx={{ width: 300 }}>
         <Slider
-          aria-label="Temperature"
-          defaultValue={4}
+          aria-label="Grid Size"
+          defaultValue={40}
           getAriaValueText={valuetext}
           valueLabelDisplay="auto"
           step={10}
@@ -27,8 +34,20 @@ export default function UI(props) {
         />
         {/* <Slider defaultValue={30} step={10} marks min={10} max={110} disabled /> */}
       </Box>
+      <Box sx={{ width: 300 }}>
+        <Slider
+          aria-label="Speed"
+          defaultValue={500}
+          getAriaValueText={speed}
+          valueLabelDisplay="auto"
+          step={50}
+          marks
+          min={10}
+          max={1000}
+        />
+        {/* <Slider defaultValue={30} step={10} marks min={10} max={110} disabled /> */}
+      </Box>
       <button onClick={runGame}>Start The Game</button>
-
     </div>
   );
 }

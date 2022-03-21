@@ -21,11 +21,18 @@ body {
   font-size: 2px;
   
 }
+
+.cell{
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
 .cell.alive{
   background-color: lightsteelblue;
   box-shadow: 1px 1px 5px rgba(147, 214, 255, 0.562) ;
-}
+  opacity: 1;
 
+}
 
 #ui{
     display: flex;
