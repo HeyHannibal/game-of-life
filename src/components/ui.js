@@ -24,12 +24,12 @@ export default function UI(props) {
       <Box sx={{ width: 300 }}>
         <Slider
           aria-label="Grid Size"
-          defaultValue={40}
+          defaultValue={5}
           getAriaValueText={valuetext}
           valueLabelDisplay="auto"
-          step={10}
+          step={5}
           marks
-          min={10}
+          min={5}
           max={80}
         />
         {/* <Slider defaultValue={30} step={10} marks min={10} max={110} disabled /> */}

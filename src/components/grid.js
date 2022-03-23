@@ -48,30 +48,46 @@ function Grid(props) {
   }
 
   function tick() {
-    console.log(gridOfLife);
-    let newTick = gridOfLife.map((column, colIndex, rowArr) => {
-      return column.map((cell, index, cellArr) => {
+    const startTime = performance.now()
+    let newTick = gridOfLife.map((column, colIndex, colArr) => {
+      return column.map((cell, index, rowArr) => {
         let neighbourCount = 0 - cell;
         for (let i = colIndex - 1; i <= colIndex + 1; i++) {
-          for (let j = index - 1; j <= index + 1; j++) {
-            if (i >= 0 && j >= 0 && i < rowArr.length && j < cellArr.length) {
+          for (let j = index - 1; j <= index + 1; j++) { /// check
+            if (i >= 0 && j >= 0 && i < colArr.length && j < rowArr.length) {
               neighbourCount += gridOfLife[i][j];
+
             }
+            if (j >= rowArr.length && (i >= 0 && i < colArr.length)) neighbourCount += gridOfLife[i][0];
+            if (j < 0 && (i >= 0 && i < colArr.length)) neighbourCount += gridOfLife[i][rowArr.length - 1];
+            if (i >= colArr.length && (j >= 0 && j < rowArr.length)) neighbourCount += gridOfLife[0][j];
+            if (i < 0 && (j >= 0 && j < rowArr.length)) neighbourCount += gridOfLife[colArr.length - 1][j];
+
           }
+          if (neighbourCount > 2) console.log('hmm')
         }
         if (cell === 1) {
           if (neighbourCount < 2) return 0;
           if (neighbourCount === 2 || neighbourCount === 3) return 1;
           if (neighbourCount > 3) return 0;
+
         }
         if (cell === 0) {
           if (neighbourCount === 3) return 1;
-          else return 0;
+          else {
+            return 0
+          };
         }
+
       });
     });
 
+
+
+
     setGridOfLife(newTick);
+    const endTime = performance.now()
+    console.log(startTime + ' then ' + endTime)
   }
 
   function addLiveCell(e) {
@@ -81,10 +97,10 @@ function Grid(props) {
       ? (newGrid[indexes[0]][indexes[1]] = 1)
       : (newGrid[indexes[0]][indexes[1]] = 0);
     setGridOfLife(newGrid);
+    console.log(gridOfLife)
   }
 
   function handleMouseOver(e) {
-    console.log(e);
     if (paintMode && mouseIsDown) {
       e.target.classList.add("alive");
       addLiveCell(e);
@@ -101,11 +117,13 @@ function Grid(props) {
           onClick={addLiveCell}
           key={index + "-" + indexes}
         >
-          {" "}
         </div>
       );
     });
   });
+
+
+
 
   return (
     <div>

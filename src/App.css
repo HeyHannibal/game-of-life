@@ -10,7 +10,6 @@ body {
   background-color: rgb(9, 9, 14);
   font-family: "Roboto";
   color: lightblue;
-
 }
 
 #grid {
@@ -19,35 +18,32 @@ body {
 
   color: lightblue;
   font-size: 2px;
-  
 }
 
-.cell{
+.cell {
   opacity: 0;
   transition: opacity 0.1s ease-in-out;
 }
 
-.cell.alive{
+.cell.alive {
   background-color: lightsteelblue;
-  box-shadow: 1px 1px 5px rgba(147, 214, 255, 0.562) ;
+  box-shadow: 1px 1px 5px rgba(147, 214, 255, 0.562);
   opacity: 1;
-
 }
 
-#ui{
-    display: flex;
-    align-items: center;
-    
+#ui {
+  display: flex;
+  align-items: center;
 }
-#ui button{
-    background-color: transparent;
-    font-family: 'Roboto';
-    color: lightcyan;
-    border: none;
-    font-size: 1.1rem;
-    transition: background-color .5s ;
-    border-radius: 1px;
+#ui button {
+  background-color: transparent;
+  font-family: "Roboto";
+  color: lightcyan;
+  border: none;
+  font-size: 1.1rem;
+  transition: background-color 0.5s;
+  border-radius: 1px;
 }
-#ui button:hover{
-    background-color: rgba(119, 136, 153, 0.562);
+#ui button:hover {
+  background-color: rgba(119, 136, 153, 0.562);
 }

@@ -30,8 +30,10 @@ function App() {
   return (
     <div className="App">
       {(gameOn) ? <h1>On</h1> : <h1>Off</h1>}
-      <UI setSize={setSize} runGame={runGame} setDelay={setDelay}/>
+      {/* <UI setSize={setSize} runGame={runGame} setDelay={setDelay}/> */}
       <Grid gridSize={gridSize} gameOn={gameOn} count={count} setGageOn={setGameOn}/>
+      <UI setSize={setSize} runGame={runGame} setDelay={setDelay}/>
+      
       </div>
   );
 }

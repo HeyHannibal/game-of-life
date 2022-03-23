@@ -1,5 +1,7 @@
 {
   "name": "game-of-life",
+ "homepage": "https://heyhannibal.github.io/game-of-life",
+
   "version": "0.1.0",
   "private": true,
   "dependencies": {
