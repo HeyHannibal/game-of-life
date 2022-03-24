@@ -13,11 +13,12 @@ body {
 }
 
 #grid {
-  height: 90vh;
-  width: 90vw;
+  height: 100vh;
+  width: 100vw;
 
   color: lightblue;
   font-size: 2px;
+  
 }
 
 .cell {
@@ -32,8 +33,12 @@ body {
 }
 
 #ui {
+  position: absolute;
   display: flex;
+  
   align-items: center;
+  top: 8rem;
+  left: 2rem
 }
 #ui button {
   background-color: transparent;
@@ -46,4 +51,9 @@ body {
 }
 #ui button:hover {
   background-color: rgba(119, 136, 153, 0.562);
+}
+#gridUI{
+  position: absolute;
+  top: 6rem;
+  left: 2rem
 }

@@ -25,14 +25,15 @@ function App() {
   
   const runGame = () => (gameOn) ? setGameOn(false) : setGameOn(true)
   const setSize = (value) => setGridSize(value)
-  
+  const clear = () => setGridSize(0)
+
 
   return (
     <div className="App">
-      {(gameOn) ? <h1>On</h1> : <h1>Off</h1>}
+      {/* {(gameOn) ? <h1>On</h1> : <h1>Off</h1>} */}
       {/* <UI setSize={setSize} runGame={runGame} setDelay={setDelay}/> */}
       <Grid gridSize={gridSize} gameOn={gameOn} count={count} setGageOn={setGameOn}/>
-      <UI setSize={setSize} runGame={runGame} setDelay={setDelay}/>
+      <UI clear={clear} setSize={setSize} runGame={runGame} setDelay={setDelay}/>
       
       </div>
   );
