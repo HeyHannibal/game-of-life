@@ -1,0 +1,27 @@
+p{
+    margin: -2px;
+}
+.MuiBox-root.css-1v5z18m 	{
+    width: 18rem;
+}
+.MuiSlider-track{
+   color: #96b6dfc0;
+   height: 2px;
+}
+.MuiSlider-thumb{
+    color: royalblue;
+}	
+@media only screen and (max-width: 800px) {
+    .MuiBox-root.css-1v5z18m 	{
+        width: 14rem;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .MuiBox-root.css-1v5z18m 	{
+        width: 10rem;
+    }
+    p{
+        font-size: 0.8rem;
+    }
+}

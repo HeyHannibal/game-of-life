@@ -1,47 +1,135 @@
-#uiContainer{
-    position: absolute;
-    left: 50%;
-    bottom: 0rem;
+#uiContainer {
+  position: absolute;
+  left: 50%;
+  width: 40vw;
+  bottom: 0;
+  transform: translateX(-50%);
 
-    transform: translateX(-50%);
-    background-color: rgba(12, 11, 15, 0.575);
-    border-radius: 20px 20px 0px 0px;
-    padding: 1rem 2rem;
-    display: flex;
+  display: flex;
+  transition: width 0.2s ease-in-out;
+  overflow-y: hidden;
+  
 }
 #ui {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-   
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #0e0e13; 
+  border-radius: 20px 20px 0px 0px;
+  padding: 1rem 2rem;  
+  position: relative;
+  bottom: 0;
+  transition: bottom 0.4s ease-in-out;
+  overflow-y: hidden;
+}
+#ui.hidden{
+  bottom: -9rem;
+  overflow-y:visible
+}
+#hideBtn{
+  width: 2.5rem;
+  height: 2.5rem;
+  position:absolute;
+  top:-55px;
+  left: 50%;
+  padding-top: 50px;
+  border-radius: 50px;
+  transform: translateX(-50%);
+  background-color: #02060a;
+  transition: top 1s ease-in-out;
+}
+#ui.hidden #hideBtn{
+  padding-top: 0;
+  transform: rotate(180deg);
+  left: 47%;
+  top: -89px
+}
+
+#runGame {
+  background-color: transparent;
+  font-family: "Roboto";
+  border: none;
+  font-size: 1.1rem;
+  transition: background-color 0.5s;
+  border-radius: 1px;
+}
+#ui button:hover {
+  background-color: #b8e3eb;
+}
+#gridUI {
+  position: absolute;
+  top: 6rem;
+  left: 2rem;
+}
+#sliders {
+  display: flex;
+  flex-direction: column;
+}
+#buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+#runGame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#runGame div {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+@media only screen and (max-width: 1300px) {
+  #uiContainer {
+    width: 60vw;
   }
-/* #ui::after{
-    position: absolute;
-    left: -2rem;
-    content: '';
-    width: 50rem;
-    height: 5rem;
-    z-index: -1;
-    background-color: rgb(158, 158, 228);
-} */
-  #ui button {
-    background-color: transparent;
-    font-family: "Roboto";
-    color: lightcyan;
-    border: none;
-    font-size: 1.1rem;
-    transition: background-color 0.5s;
-    border-radius: 1px;
+}
+
+@media only screen and (max-width: 1000px) {
+  #uiContainer {
+    width: 70vw;
   }
-  #ui button:hover {
-    background-color: rgba(119, 136, 153, 0.562);
+}
+@media only screen and (max-width: 800px) {
+  #uiContainer {
+    width: 90vw;
   }
-  #gridUI{
-    position: absolute;
-    top: 6rem;
-    left: 2rem
+}
+
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium {
+  font-size: 40px;
+}
+
+#hideBtn{
+  width: 2.5rem;
+  height: 2.5rem;
+  position:absolute;
+  top:-55px;
+  left: 50%;
+  padding-top: 50px;
+  border-radius: 50px;
+  transform: translateX(-50%);
+  background-color: #02060a;
+}
+@media only screen and (max-width: 800px) {
+  .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium {
+    font-size: 30px;
   }
-  #sliders{
-      display: flex;
-      flex-direction: row;
+}
+
+@media only screen and (max-width: 500px) {
+  .MuiButtonBase-root.MuiFab-root{
+    width: 2.2rem;
+    height: 2.2rem;
   }
+  #uiContainer {
+    width: 95vw;
+    margin-bottom: -10px;
+  }
+  #ui{
+    padding: 0.5rem 1rem;
+  }
+}

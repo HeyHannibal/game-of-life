@@ -12,6 +12,7 @@ body {
   font-family: "Roboto";
   color: lightblue;
   margin: 0;
+  overflow: hidden;
 }
 
 #grid {

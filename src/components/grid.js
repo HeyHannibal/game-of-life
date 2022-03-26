@@ -21,6 +21,7 @@ function Grid(props) {
     display: "grid",
     gridTemplateRows: `repeat(${props.gridSize}, 1fr)`,
     gridTemplateColumns: `repeat(${props.gridSize}, 1fr)`,
+    
   };
 
   function generateGrid(N) {
@@ -71,6 +72,10 @@ function Grid(props) {
         }
       });
     });
+
+
+
+    
     setGridOfLife(newTick);
     const endTime = performance.now();
     console.log(startTime + " then " + endTime);

@@ -1,9 +1,15 @@
+import { useState } from "react";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
-import Fab from '@mui/material/Fab';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-import '../ui.css'
+import Fab from "@mui/material/Fab";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import PlusOneIcon from "@mui/icons-material/PlusOne";
+import BrushIcon from "@mui/icons-material/Brush";
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';import "../ui.css";
+import '../slider.css'
+
 
 export default function UI(props) {
   function valuetext(value) {
@@ -13,77 +19,95 @@ export default function UI(props) {
   }
 
   function speed(value) {
-    props.setDelay(value)
-    return `${value}`
+    props.setDelay(value);
+    return `${value}`;
   }
 
   function runGame() {
-    props.runGame()
+    props.runGame();
   }
 
   function clear() {
-    props.clear()
+    props.clear();
   }
 
   function tick() {
-    props.tick()
+    props.tick();
   }
 
+  const [showUI, setShowUI] = useState(true);
+  const hideUI = () => {
+    setShowUI(!showUI)
+    console.log(showUI)
+  }
+
+
   function paintModeSwitch() {
-    props.paintModeSwitch()
+    props.paintModeSwitch();
   }
 
   return (
-    <div id='uiContainer'>
-      <div id='ui'>
-        <div id='sliders'>
-          <label >
-            Size of Field
+    <div id="uiContainer">
+      {/* <button id='hideBtn' onClick={hideUI} >Hide</button> */}
+      <div id="ui" className={(!showUI) ?'hidden' : ''}>
+      <KeyboardDoubleArrowDownIcon id='hideBtn' onClick={hideUI} />
+
+        <div id="sliders">
+          <label>
+            <p>Size of Field</p>
             <Box sx={{ width: 300 }}>
-              <Slider
+              <Slider size='small'
                 aria-label="Grid Size"
                 defaultValue={30}
                 getAriaValueText={valuetext}
                 valueLabelDisplay="auto"
-                step={5}
-                marks
-                min={5}
+                step={10}
+                
+                min={10}
                 max={90}
               />
-              {/* <Slider defaultValue={30} step={10} marks min={10} max={110} disabled /> */}
             </Box>
           </label>
-          <label >
-            Speed
+          <label>
+            <p>Speed</p>
             <Box sx={{ width: 300 }}>
-              <Slider
+              <Slider size='small'
                 aria-label="Speed"
                 defaultValue={500}
                 getAriaValueText={speed}
                 valueLabelDisplay="auto"
                 step={50}
-                marks
+                
                 min={10}
                 max={1000}
               />
-              {/* <Slider defaultValue={30} step={10} marks min={10} max={110} disabled /> */}
             </Box>
           </label>
         </div>
-        <div id='buttons'>
-          <button onClick={clear}>Clear</button>
-          <button onClick={tick}>Tick</button>
-      
-            <button onClick={paintModeSwitch}>
-              Paint Mode: {`${props.paintMode ? "on" : "off"}`}
-            </button>
-      
+        <div id="buttons">
+          <RestartAltIcon
+            onClick={clear}
+          />
+          <PlusOneIcon onClick={tick} />
+
+          <BrushIcon
+            onClick={paintModeSwitch}
+            sx={{
+              color: props.paintMode ? "lightblue" : "#add8e67d",
+            }}
+          />
         </div>
-        
+         <div id="runGame">
+        <Fab onClick={runGame}>
+          {props.gameOn ? (
+            <PauseCircleOutlineIcon />
+          ) : (
+            <PlayCircleOutlineIcon/>
+          )}
+        </Fab>
       </div>
-      <div id='runGame'>
-        <Fab onClick={runGame}>{(props.gameOn) ?  <PauseCircleOutlineIcon sx={{ fontSize: 40 }}/> : <PlayCircleOutlineIcon sx={{ fontSize: 40 }}/>   }</Fab>
-        </div>
+      </div>
+     
     </div>
   );
 }

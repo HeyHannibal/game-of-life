@@ -15,11 +15,9 @@ function App() {
   const [paintMode, setPaintMode] = useState(false);
   const [mouseIsDown, setMouseIsDown] = useState(false);
   const handleMouseUpDown = (e) => {
-    console.log('RUUUN')
-    e.type === "mousedown" ? setMouseIsDown(true) : setMouseIsDown(false);
+    if (e.type === "mousedown") setMouseIsDown(!mouseIsDown)
   };
-  const paintModeSwitch = () =>
-    paintMode ? setPaintMode(false) : setPaintMode(true);
+  const paintModeSwitch = () => setPaintMode(!paintMode)
 
 
 
