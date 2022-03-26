@@ -1,12 +1,13 @@
 {
   "name": "game-of-life",
- "homepage": "https://heyhannibal.github.io/game-of-life",
-
+  "homepage": "https://heyhannibal.github.io/game-of-life",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "@material-ui/icons": "^4.11.2",
+    "@mui/icons-material": "^5.5.1",
     "@mui/material": "^5.5.1",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",

@@ -1,41 +1,71 @@
-import { useState, useEffect } from 'react';
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
 
-import UI from './components/ui'
-import Grid from './components/grid'
-import useInterval from './useInterval'
+import UI from "./components/ui";
+import Grid from "./components/grid";
+import useInterval from "./useInterval";
 
 function App() {
+  const [gameOn, setGameOn] = useState(false);
+  const [gridSize, setGridSize] = useState(0);
+
+  const [count, setCount] = useState(0);
+  const [delay, setDelay] = useState(1000);
+
+  const [paintMode, setPaintMode] = useState(false);
+  const [mouseIsDown, setMouseIsDown] = useState(false);
+  const handleMouseUpDown = (e) => {
+    console.log('RUUUN')
+    e.type === "mousedown" ? setMouseIsDown(true) : setMouseIsDown(false);
+  };
+  const paintModeSwitch = () =>
+    paintMode ? setPaintMode(false) : setPaintMode(true);
 
 
-  
 
-  const [gameOn, setGameOn] = useState(false)
-  const [gridSize, setGridSize] = useState(0)
 
-  const [count, setCount] = useState(0)
-  const [delay, setDelay] = useState(1000)
 
   useInterval(() => {
-    if(gameOn) {setCount(count + 1)
-    console.log(count)}
-  }, delay)     
+    if (gameOn) {
+      setCount(count + 1);
+      console.log(count);
+    }
+  }, delay);
 
-
-  
-  const runGame = () => (gameOn) ? setGameOn(false) : setGameOn(true)
-  const setSize = (value) => setGridSize(value)
-  const clear = () => setGridSize(0)
+  const runGame = () => (gameOn ? setGameOn(false) : setGameOn(true));
+  const setSize = (value) => setGridSize(value);
+  const clear = () => setGridSize(0);
+  const tick = () => {
+    setCount((prev) => prev + 1);
+  };
 
 
   return (
-    <div className="App">
+    <div className="App"
+    onMouseUp={handleMouseUpDown}
+    onMouseDown={handleMouseUpDown}>
       {/* {(gameOn) ? <h1>On</h1> : <h1>Off</h1>} */}
       {/* <UI setSize={setSize} runGame={runGame} setDelay={setDelay}/> */}
-      <Grid gridSize={gridSize} gameOn={gameOn} count={count} setGageOn={setGameOn}/>
-      <UI clear={clear} setSize={setSize} runGame={runGame} setDelay={setDelay}/>
-      
-      </div>
+      <Grid
+        gridSize={gridSize}
+        gameOn={gameOn}
+        count={count}
+        setGageOn={setGameOn}
+       
+        paintMode={paintMode}
+        mouseIsDown={mouseIsDown}
+      />
+      <UI
+        clear={clear}
+        tick={tick}
+        setSize={setSize}
+        runGame={runGame}
+        setDelay={setDelay}
+        paintModeSwitch={paintModeSwitch}
+        paintMode={paintMode}
+        gameOn={gameOn}
+      />
+    </div>
   );
 }
 

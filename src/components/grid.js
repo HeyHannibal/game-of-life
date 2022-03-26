@@ -3,24 +3,17 @@ import { useState, useEffect } from "react";
 function Grid(props) {
   const [gridOfLife, setGridOfLife] = useState(generateGrid(props.gridSize));
   const [prevGridSize, setPrevGridSize] = useState(0);
-  const [prevCount, setPrevCount] = useState(0);
-  const [mouseIsDown, setMouseIsDown] = useState(false);
-  const handleMouseUpDown = (e) => {
-    e.type === "mousedown" ? setMouseIsDown(true) : setMouseIsDown(false);
-  };
+  const [Count, setCount] = useState(0);
 
-  const [paintMode, setPaintMode] = useState(false);
-  const paintModeOnOff = () =>
-    paintMode ? setPaintMode(false) : setPaintMode(true);
 
   useEffect(() => {
     if (prevGridSize !== props.gridSize) {
       setPrevGridSize(props.gridSize);
       setGridOfLife(generateGrid(props.gridSize));
     }
-    if (prevCount !== props.count) {
+    if (Count !== props.count) {
       tick();
-      setPrevCount(props.count);
+      setCount(props.count);
     }
   }, [props]);
 
@@ -42,26 +35,27 @@ function Grid(props) {
     return board;
   }
 
-
-
   function tick() {
-    const startTime = performance.now()
+    const startTime = performance.now();
     let newTick = gridOfLife.map((column, colIndex, colArr) => {
       return column.map((cell, index, rowArr) => {
         let neighbourCount = 0 - cell;
         for (let i = colIndex - 1; i <= colIndex + 1; i++) {
-          for (let j = index - 1; j <= index + 1; j++) { 
+          for (let j = index - 1; j <= index + 1; j++) {
             if (i >= 0 && j >= 0 && i < colArr.length && j < rowArr.length) {
               neighbourCount += gridOfLife[i][j];
             }
-            
-            if(i >= 0 && i < colArr.length) { //  active areas that move across the grid's edge reappear at the opposite edge.
-              if (j >= rowArr.length) neighbourCount += gridOfLife[i][0];  
+
+            if (i >= 0 && i < colArr.length) {
+              //  active areas that move across the grid's edge reappear at the opposite edge.
+              if (j >= rowArr.length) neighbourCount += gridOfLife[i][0];
               if (j < 0) neighbourCount += gridOfLife[i][rowArr.length - 1];
             }
-            if(j >= 0 && j < rowArr.length) {
-              if (i >= colArr.length && (j >= 0 && j < rowArr.length)) neighbourCount += gridOfLife[0][j];
-              if (i < 0 && (j >= 0 && j < rowArr.length)) neighbourCount += gridOfLife[colArr.length - 1][j];
+            if (j >= 0 && j < rowArr.length) {
+              if (i >= colArr.length && j >= 0 && j < rowArr.length)
+                neighbourCount += gridOfLife[0][j];
+              if (i < 0 && j >= 0 && j < rowArr.length)
+                neighbourCount += gridOfLife[colArr.length - 1][j];
             }
           }
         }
@@ -72,15 +66,14 @@ function Grid(props) {
         if (cell === 0) {
           if (neighbourCount === 3) return 1;
           else {
-            return 0
-          };
+            return 0;
+          }
         }
-
       });
     });
     setGridOfLife(newTick);
-    const endTime = performance.now()
-    console.log(startTime + ' then ' + endTime)
+    const endTime = performance.now();
+    console.log(startTime + " then " + endTime);
   }
 
   function addLiveCell(e) {
@@ -93,14 +86,14 @@ function Grid(props) {
   }
 
   function handleMouseOver(e) {
-    if (paintMode && mouseIsDown) {
+    if (props.paintMode && props.mouseIsDown) {
       e.target.classList.add("alive");
       addLiveCell(e);
     }
-
   }
 
   const grid = gridOfLife.map((row, index) => {
+    ///render grid
     return row.map((cell, indexes) => {
       return (
         <div
@@ -108,28 +101,20 @@ function Grid(props) {
           className={`cell ${cell === 1 ? "alive" : ""}`}
           onClick={addLiveCell}
           key={index + "-" + indexes}
-        >
-        </div>
+        ></div>
       );
     });
   });
 
-
   return (
     <div>
-      <div id='gridUI'>
-        <button onClick={tick}>Tick</button>
-        <button onClick={paintModeOnOff}>Paint Mode: {`${paintMode ? "on" : "off"}`}
-      </button>
-      </div>
-        
+    
+
       <div
         id="grid"
         style={gridStyle}
         onMouseEnter={handleMouseOver}
         onMouseOver={handleMouseOver}
-        onMouseDown={handleMouseUpDown}
-        onMouseUp={handleMouseUpDown}
       >
         {grid}
       </div>
