@@ -26,7 +26,6 @@ function App() {
   useInterval(() => {
     if (gameOn) {
       setCount(count + 1);
-      console.log(count);
     }
   }, delay);
 
@@ -37,12 +36,12 @@ function App() {
     setCount((prev) => prev + 1);
   };
 
-
   return (
     <div className="App"
     onMouseUp={handleMouseUpDown}
-    onMouseDown={handleMouseUpDown}>
-      {/* {(gameOn) ? <h1>On</h1> : <h1>Off</h1>} */}
+    onMouseDown={handleMouseUpDown}
+    >
+    {/* {(gameOn) ? <h1>On</h1> : <h1>Off</h1>} */}
       {/* <UI setSize={setSize} runGame={runGame} setDelay={setDelay}/> */}
       <Grid
         gridSize={gridSize}

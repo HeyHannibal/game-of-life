@@ -64,7 +64,7 @@ export default function UI(props) {
                 step={10}
                 
                 min={10}
-                max={90}
+                max={80}
               />
             </Box>
           </label>

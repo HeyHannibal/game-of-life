@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function Grid(props) {
   const [gridOfLife, setGridOfLife] = useState(generateGrid(props.gridSize));
@@ -21,7 +21,6 @@ function Grid(props) {
     display: "grid",
     gridTemplateRows: `repeat(${props.gridSize}, 1fr)`,
     gridTemplateColumns: `repeat(${props.gridSize}, 1fr)`,
-    
   };
 
   function generateGrid(N) {
@@ -38,6 +37,7 @@ function Grid(props) {
 
   function tick() {
     const startTime = performance.now();
+    const activeFields = [];
     let newTick = gridOfLife.map((column, colIndex, colArr) => {
       return column.map((cell, index, rowArr) => {
         let neighbourCount = 0 - cell;
@@ -73,12 +73,9 @@ function Grid(props) {
       });
     });
 
-
-
-    
     setGridOfLife(newTick);
     const endTime = performance.now();
-    console.log(startTime + " then " + endTime);
+    console.log(endTime - startTime);
   }
 
   function addLiveCell(e) {
@@ -100,26 +97,31 @@ function Grid(props) {
   const grid = gridOfLife.map((row, index) => {
     ///render grid
     return row.map((cell, indexes) => {
-      return (
-        <div
+      return cell === 1 ? (
+        <span
           id={index + "-" + indexes}
           className={`cell ${cell === 1 ? "alive" : ""}`}
           onClick={addLiveCell}
           key={index + "-" + indexes}
-        ></div>
+        ></span>
+      ) : (
+        <span
+          id={index + "-" + indexes}
+          onClick={addLiveCell}
+          key={index + "-" + indexes}
+        ></span>
       );
     });
   });
 
   return (
     <div>
-    
-
       <div
         id="grid"
         style={gridStyle}
         onMouseEnter={handleMouseOver}
         onMouseOver={handleMouseOver}
+       
       >
         {grid}
       </div>
