@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+import "./css/App.css";
 
 import UI from "./components/ui";
 import Grid from "./components/grid";
@@ -26,7 +26,6 @@ function App() {
   useInterval(() => {
     if (gameOn) {
       setCount(count + 1);
-      console.log(count);
     }
   }, delay);
 
@@ -42,8 +41,6 @@ function App() {
     <div className="App"
     onMouseUp={handleMouseUpDown}
     onMouseDown={handleMouseUpDown}>
-      {/* {(gameOn) ? <h1>On</h1> : <h1>Off</h1>} */}
-      {/* <UI setSize={setSize} runGame={runGame} setDelay={setDelay}/> */}
       <Grid
         gridSize={gridSize}
         gameOn={gameOn}

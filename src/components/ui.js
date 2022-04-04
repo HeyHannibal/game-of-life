@@ -7,14 +7,13 @@ import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlusOneIcon from "@mui/icons-material/PlusOne";
 import BrushIcon from "@mui/icons-material/Brush";
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';import "../ui.css";
-import '../slider.css'
-
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import '../css/slider.css';
+import '../css/ui.css';
 
 export default function UI(props) {
   function valuetext(value) {
     props.setSize(value);
-
     return `${value}`;
   }
 
@@ -38,7 +37,6 @@ export default function UI(props) {
   const [showUI, setShowUI] = useState(true);
   const hideUI = () => {
     setShowUI(!showUI)
-    console.log(showUI)
   }
 
 
@@ -77,7 +75,7 @@ export default function UI(props) {
                 getAriaValueText={speed}
                 valueLabelDisplay="auto"
                 step={50}
-                
+                dir="left"
                 min={10}
                 max={1000}
               />
