@@ -1,18 +1,43 @@
 import Context from "@mui/base/TabsUnstyled/TabsContext";
+import { grid } from "@mui/system";
 import { useRef, useEffect, useState } from "react";
+
+
+
+const randomInt = (min, max) =>  Math.floor(Math.random() * (max - min + 1) + min)
+
+
+
+
+
 export default function Canvas(props) {
   const canvasRef = useRef(null);
   const [ctx, setCtx] = useState(null);
+  const [canvasSize, setCanvasSize] = useState(1000);
+  const { gridArray, addCell } = props;
 
   const draw = (ctx) => {
     ctx.strokeStyle = "grey";
-    ctx.strokeRect(250, 100, 400, 400);
-    for (let i = 0; i <= 8; i++) {
-      for (let j = 0; j <= 8; j++) {
-        (i + j) % 2 !== 0
-          ? (ctx.fillStyle = "lightblue")
-          : (ctx.fillStyle = "lightpink");
-        ctx.fillRect(250 + 50 * i, 100 + 50 * j, 50, 50);
+    ctx.strokeRect(0, 0, canvasSize, canvasSize);
+    const res = Math.floor(canvasSize / (gridArray.length * 1));
+    const xy = gridArray.length;
+
+    for (let i = 0; i < xy; i++) {
+      for (let j = 0; j < xy; j++) {
+        if (gridArray[i][j] === 0) {
+          ctx.fillStyle = "#4994ac";
+          ctx.shadowColor = 'transparent';
+
+          ctx.fillRect(res * i, res * j, res, res);
+        } else {
+          ctx.fillStyle = "#d0e8ef";
+          ctx.shadowColor = 'lightblue';
+          ctx.shadowOffsetX = randomInt(-5,5)
+          ctx.shadowOffsetY = randomInt(-5,5)
+          ctx.shadowBlur = randomInt(5,30);
+          ctx.fillRect(res * i, res * j, res, res);
+
+        }
       }
     }
   };
@@ -20,14 +45,29 @@ export default function Canvas(props) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    ctx.fillStyle = 'lightblue'
+    ctx.fillStyle = "lightblue";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     draw(ctx);
-
   }, [draw]);
 
-  return <canvas ref={canvasRef} width="840" height="860" />;
+  function addLiveCell(e) {
+    const rect = e.target.getBoundingClientRect();
+    const res = canvasSize / gridArray.length;
+    const x = Math.floor((e.clientX - rect.left) / res);
+    const y = Math.floor((e.clientY - rect.top) / res);
+    const clickCoord = { x, y };
+    addCell(clickCoord);
+  }
+
+  return (
+    <canvas
+      onClick={addLiveCell}
+      ref={canvasRef}
+      width={canvasSize}
+      height={canvasSize}
+    />
+  );
 }
 
 // ctx.fillStyle = '#add8e6'

@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-
+import Canvas from './canvas'
 function Grid(props) {
   const [gridOfLife, setGridOfLife] = useState(generateGrid(props.gridSize));
   const [Count, setCount] = useState(0);
+
+  const {brushSize} = props
 
   useEffect(() => {
     if (gridOfLife.length !== props.gridSize) {
@@ -12,14 +14,9 @@ function Grid(props) {
       tick();
       setCount(props.count);
     }
-    console.log(gridOfLife)
+    // console.log(gridOfLife)
   }, [props]);
 
-  const gridStyle = {
-    display: "grid",
-    gridTemplateRows: `repeat(${props.gridSize}, 1fr)`,
-    gridTemplateColumns: `repeat(${props.gridSize}, 1fr)`,
-  };
 
   function generateGrid(N) {
     const board = [];
@@ -73,43 +70,39 @@ function Grid(props) {
     setGridOfLife(newTick);
   }
 
-  function addLiveCell(e) {
-    const [col, row] = e.target.id.split("-");
-    const newGrid = [...gridOfLife];
-    newGrid[col][row] === 0 ? (newGrid[col][row] = 1) : (newGrid[col][row] = 0);
-    setGridOfLife(newGrid);
-  }
+  function considerPaint(coord) {
+    let brushStroke = [coord]
+    let {x, y} = coord
+    const radius = 2
 
-  function handleMouseOver(e) {
-    if (props.paintMode && props.mouseIsDown) {
-      e.target.classList.add("alive");
-      addLiveCell(e);
+    for(let i = 1; i <= radius; i++) {
+      i % 2 === 0 ? brushStroke.push({x: x - i, y}) : brushStroke.push({x: x + i, y})
     }
+    for(let j = 1; j <= radius; j++) {
+      j % 2 === 0 ? brushStroke.push({x, y: y -j}) : brushStroke.push({x, y: y + j}) 
+    }
+    console.log(brushStroke)
+
   }
 
-  const grid = gridOfLife.map((row, index) => {
-    ///render grid
-    return row.map((cell, indexes) => {
-      return (
-        <div
-          id={index + "-" + indexes}
-          className={`cell ${cell === 1 ? "alive" : ""}`}
-          onClick={addLiveCell}
-          key={index + "-" + indexes}
-        ></div>
-      );
-    });
-  });
+
+  function addCell(coord) {
+    console.log(considerPaint(coord))
+    const newGrid = [...gridOfLife];
+    newGrid[coord.x][coord.y] === 0 ? (newGrid[coord.x][coord.y] = 1) : (newGrid[coord.x][coord.y] = 0);
+    setGridOfLife(newGrid);
+    // console.log(coord)
+    // console.log(newGrid)
+  }
+
+
 
   return (
     <div>
       <div
         id="grid"
-        style={gridStyle}
-        onMouseEnter={handleMouseOver}
-        onMouseOver={handleMouseOver}
       >
-        {/* {grid} */}
+      <Canvas       addCell={addCell}   gridArray={gridOfLife}></Canvas>
       </div>
     </div>
   );

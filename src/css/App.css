@@ -21,7 +21,6 @@ body {
 
   color: lightblue;
   font-size: 2px;
-  
 }
 
 .cell {
@@ -35,4 +34,3 @@ body {
   opacity: 1;
   transition: box-shadow 0.1s;
 }
-

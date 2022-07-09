@@ -10,7 +10,8 @@ import useInterval from "./useInterval";
 function App() {
   const [gameOn, setGameOn] = useState(false);
   const [gridSize, setGridSize] = useState(0);
-
+  const [brushSize, setBrushSize] = useState(0)
+  
   const [count, setCount] = useState(0);
   const [delay, setDelay] = useState(1000);
 
@@ -45,17 +46,20 @@ function App() {
         gridSize={gridSize}
         gameOn={gameOn}
         count={count}
-        setGageOn={setGameOn}
         paintMode={paintMode}
         mouseIsDown={mouseIsDown}
+        brushSize={brushSize}
       />
       <UI
         clear={clear}
         tick={tick}
         setSize={setSize}
+        setBrushSize={setBrushSize}
+        brushSize={brushSize}
         runGame={runGame}
         setDelay={setDelay}
         paintModeSwitch={paintModeSwitch}
+
         paintMode={paintMode}
         gameOn={gameOn}
       />
