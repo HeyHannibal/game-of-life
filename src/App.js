@@ -3,7 +3,9 @@ import "./css/App.css";
 
 import UI from "./components/ui";
 import Grid from "./components/grid";
+import Canvas from './components/canvas'
 import useInterval from "./useInterval";
+
 
 function App() {
   const [gameOn, setGameOn] = useState(false);
@@ -15,13 +17,9 @@ function App() {
   const [paintMode, setPaintMode] = useState(false);
   const [mouseIsDown, setMouseIsDown] = useState(false);
   const handleMouseUpDown = (e) => {
-    if (e.type === "mousedown") setMouseIsDown(!mouseIsDown)
+    if (e.type === "mousedown") setMouseIsDown(!mouseIsDown);
   };
-  const paintModeSwitch = () => setPaintMode(!paintMode)
-
-
-
-
+  const paintModeSwitch = () => setPaintMode(!paintMode);
 
   useInterval(() => {
     if (gameOn) {
@@ -36,17 +34,18 @@ function App() {
     setCount((prev) => prev + 1);
   };
 
-
   return (
-    <div className="App"
-    onMouseUp={handleMouseUpDown}
-    onMouseDown={handleMouseUpDown}>
+    <div
+      className="App"
+      onMouseUp={handleMouseUpDown}
+      onMouseDown={handleMouseUpDown}
+    >
+     
       <Grid
         gridSize={gridSize}
         gameOn={gameOn}
         count={count}
         setGageOn={setGameOn}
-       
         paintMode={paintMode}
         mouseIsDown={mouseIsDown}
       />

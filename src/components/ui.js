@@ -46,7 +46,6 @@ export default function UI(props) {
 
   return (
     <div id="uiContainer">
-      {/* <button id='hideBtn' onClick={hideUI} >Hide</button> */}
       <div id="ui" className={(!showUI) ?'hidden' : ''}>
       <KeyboardDoubleArrowDownIcon id='hideBtn' onClick={hideUI} />
 
@@ -62,7 +61,7 @@ export default function UI(props) {
                 step={10}
                 
                 min={10}
-                max={90}
+                max={80}
               />
             </Box>
           </label>

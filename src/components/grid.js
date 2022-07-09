@@ -12,6 +12,7 @@ function Grid(props) {
       tick();
       setCount(props.count);
     }
+    console.log(gridOfLife)
   }, [props]);
 
   const gridStyle = {
@@ -46,17 +47,17 @@ function Grid(props) {
               // if cell is alive, count it as a neighbour
               neighbourCount += gridOfLife[i][j];
             }
-            if (i >= 0 && i < colArr.length) {
-              // if neighbouring cell is beyond the border of the array, count the opposite side as cell's neighbour
-              if (j >= rowArr.length) neighbourCount += gridOfLife[i][0];
-              if (j < 0) neighbourCount += gridOfLife[i][rowArr.length - 1];
-            }
-            if (j >= 0 && j < rowArr.length) {
-              if (i >= colArr.length && j >= 0 && j < rowArr.length)
-                neighbourCount += gridOfLife[0][j];
-              if (i < 0 && j >= 0 && j < rowArr.length)
-                neighbourCount += gridOfLife[colArr.length - 1][j];
-            }
+            // if (i >= 0 && i < colArr.length) {
+            //   // if neighbouring cell is beyond the border of the array, count the opposite side as cell's neighbour
+            //   if (j >= rowArr.length) neighbourCount += gridOfLife[i][0];
+            //   if (j < 0) neighbourCount += gridOfLife[i][rowArr.length - 1];
+            // }
+            // if (j >= 0 && j < rowArr.length) {
+            //   if (i >= colArr.length && j >= 0 && j < rowArr.length)
+            //     neighbourCount += gridOfLife[0][j];
+            //   if (i < 0 && j >= 0 && j < rowArr.length)
+            //     neighbourCount += gridOfLife[colArr.length - 1][j];
+            // }
           }
         }
         if (cell === 1) {
@@ -108,7 +109,7 @@ function Grid(props) {
         onMouseEnter={handleMouseOver}
         onMouseOver={handleMouseOver}
       >
-        {grid}
+        {/* {grid} */}
       </div>
     </div>
   );
