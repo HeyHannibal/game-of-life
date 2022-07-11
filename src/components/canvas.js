@@ -2,41 +2,34 @@ import Context from "@mui/base/TabsUnstyled/TabsContext";
 import { grid } from "@mui/system";
 import { useRef, useEffect, useState } from "react";
 
-
-
-const randomInt = (min, max) =>  Math.floor(Math.random() * (max - min + 1) + min)
-
-
-
-
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
 
 export default function Canvas(props) {
   const canvasRef = useRef(null);
-  const [ctx, setCtx] = useState(null);
   const [canvasSize, setCanvasSize] = useState(1000);
   const { gridArray, addCell } = props;
 
   const draw = (ctx) => {
     ctx.strokeStyle = "grey";
     ctx.strokeRect(0, 0, canvasSize, canvasSize);
-    const res = Math.floor(canvasSize / (gridArray.length * 1));
-    const xy = gridArray.length;
+    const res = canvasSize / gridArray.length;
+    const gridLength = gridArray.length;
 
-    for (let i = 0; i < xy; i++) {
-      for (let j = 0; j < xy; j++) {
+    for (let i = 0; i < gridLength; i++) {
+      for (let j = 0; j < gridLength; j++) {
         if (gridArray[i][j] === 0) {
           ctx.fillStyle = "#4994ac";
-          ctx.shadowColor = 'transparent';
+          ctx.shadowColor = "transparent";
 
           ctx.fillRect(res * i, res * j, res, res);
         } else {
           ctx.fillStyle = "#d0e8ef";
-          ctx.shadowColor = 'lightblue';
-          ctx.shadowOffsetX = randomInt(-5,5)
-          ctx.shadowOffsetY = randomInt(-5,5)
-          ctx.shadowBlur = randomInt(5,30);
+          // ctx.shadowColor = 'lightblue';
+          // ctx.shadowOffsetX = randomInt(-5,5)
+          // ctx.shadowOffsetY = randomInt(-5,5)
+          // ctx.shadowBlur = randomInt(5,30);
           ctx.fillRect(res * i, res * j, res, res);
-
         }
       }
     }
@@ -60,8 +53,18 @@ export default function Canvas(props) {
     addCell(clickCoord);
   }
 
+  function paintCells(e) {
+    const rect = e.target.getBoundingClientRect();
+    const res = canvasSize / gridArray.length;
+    const x = Math.floor((e.clientX - rect.left) / res);
+    const y = Math.floor((e.clientY - rect.top) / res);
+    const clickCoord = { x, y };
+    props.paint(clickCoord);
+  }
+
   return (
     <canvas
+      // onMouseMove={paintCells}
       onClick={addLiveCell}
       ref={canvasRef}
       width={canvasSize}

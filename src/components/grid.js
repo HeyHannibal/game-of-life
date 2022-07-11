@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import Canvas from './canvas'
+import Canvas from "./canvas";
 function Grid(props) {
   const [gridOfLife, setGridOfLife] = useState(generateGrid(props.gridSize));
+
   const [Count, setCount] = useState(0);
 
-  const {brushSize} = props
+  const { brushSize } = props;
 
   useEffect(() => {
     if (gridOfLife.length !== props.gridSize) {
@@ -14,9 +15,7 @@ function Grid(props) {
       tick();
       setCount(props.count);
     }
-    // console.log(gridOfLife)
-  }, [props]);
-
+  });
 
   function generateGrid(N) {
     const board = [];
@@ -31,6 +30,7 @@ function Grid(props) {
   }
 
   function tick() {
+    console.time("one tick");
     let newTick = gridOfLife.map((column, colIndex, colArr) => {
       // go through every column in the array
       return column.map((cell, index, rowArr) => {
@@ -44,17 +44,7 @@ function Grid(props) {
               // if cell is alive, count it as a neighbour
               neighbourCount += gridOfLife[i][j];
             }
-            // if (i >= 0 && i < colArr.length) {
-            //   // if neighbouring cell is beyond the border of the array, count the opposite side as cell's neighbour
-            //   if (j >= rowArr.length) neighbourCount += gridOfLife[i][0];
-            //   if (j < 0) neighbourCount += gridOfLife[i][rowArr.length - 1];
-            // }
-            // if (j >= 0 && j < rowArr.length) {
-            //   if (i >= colArr.length && j >= 0 && j < rowArr.length)
-            //     neighbourCount += gridOfLife[0][j];
-            //   if (i < 0 && j >= 0 && j < rowArr.length)
-            //     neighbourCount += gridOfLife[colArr.length - 1][j];
-            // }
+            // Put Toroid Algorithm Here
           }
         }
         if (cell === 1) {
@@ -68,44 +58,82 @@ function Grid(props) {
       });
     });
     setGridOfLife(newTick);
+    console.timeEnd("one tick");
   }
 
   function considerPaint(coord) {
-    let brushStroke = [coord]
-    let {x, y} = coord
-    const radius = 2
+    let { x, y } = coord;
+    let range = (x) => {
+      let arr = [];
+      let low = x / -2;
+      for (let i = 0; i <= x; i++) {
+        arr.push({ x: low + i });
+      }
+      for (let i = 0; i <= x; i++) {
+        arr[i].y = low + i;
+      }
 
-    for(let i = 1; i <= radius; i++) {
-      i % 2 === 0 ? brushStroke.push({x: x - i, y}) : brushStroke.push({x: x + i, y})
-    }
-    for(let j = 1; j <= radius; j++) {
-      j % 2 === 0 ? brushStroke.push({x, y: y -j}) : brushStroke.push({x, y: y + j}) 
-    }
-    console.log(brushStroke)
-
+      return arr;
+    };
+    const brushed = range(4).map((coo) => {
+      return { x: x - coo.x, y: y - coo.y };
+    });
+    return brushed;
   }
-
 
   function addCell(coord) {
-    console.log(considerPaint(coord))
+    // const stroke = considerPaint(coord);
     const newGrid = [...gridOfLife];
-    newGrid[coord.x][coord.y] === 0 ? (newGrid[coord.x][coord.y] = 1) : (newGrid[coord.x][coord.y] = 0);
+    [coord].forEach((stroke) => {
+      newGrid[stroke.x][stroke.y] === 0
+        ? (newGrid[stroke.x][stroke.y] = 1)
+        : (newGrid[stroke.x][stroke.y] = 0);
+    });
+
     setGridOfLife(newGrid);
-    // console.log(coord)
-    // console.log(newGrid)
   }
 
-
+  function paint(coord) {
+    const stroke = considerPaint(coord);
+    const newGrid = [...gridOfLife];
+    stroke.forEach((stroke) => {
+      newGrid[stroke.x][stroke.y] = 1;
+    });
+    setGridOfLife(newGrid);
+  }
 
   return (
     <div>
-      <div
-        id="grid"
-      >
-      <Canvas       addCell={addCell}   gridArray={gridOfLife}></Canvas>
+      <div id="grid">
+        <Canvas addCell={addCell} paint={paint} gridArray={gridOfLife}></Canvas>
       </div>
     </div>
   );
 }
 
 export default Grid;
+
+// | TOROID !!!
+
+// if (i >= 0 && i < colArr.length) {
+//   // if neighbouring cell is beyond the border of the array, count the opposite side as cell's neighbour
+//   if (j >= rowArr.length) neighbourCount += gridOfLife[i][0];
+//   if (j < 0) neighbourCount += gridOfLife[i][rowArr.length - 1];
+// }
+// if (j >= 0 && j < rowArr.length) {
+//   if (i >= colArr.length && j >= 0 && j < rowArr.length)
+//     neighbourCount += gridOfLife[0][j];
+//   if (i < 0 && j >= 0 && j < rowArr.length)
+//     neighbourCount += gridOfLife[colArr.length - 1][j];
+// }
+
+// for (let i = 0; i <= size; i++) {
+//   let rng = range(4);
+//   brushStroke.push({ x: x + rng[i].x, y });
+// }
+// for (let i = 0; i <= size; i++) {
+//   let rng = range(4);
+//   brushStroke.push({ x, y: y + rng[i].y });
+// }
+// console.log(brushStroke)
+// return brushStroke;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
@@ -12,12 +12,12 @@ import "../css/slider.css";
 import "../css/ui.css";
 
 export default function UI(props) {
-  const [showUI, setShowUI] = useState(true)
-  const hideUI = () => setShowUI(!showUI);
-
-
 
   const {setSize, setDelay, runGame, clear, tick, paintModeSwith, brushSize, setBrushSize} = props
+
+  const [showUI, setShowUI] = useState(true)
+
+  const hideUI = () => setShowUI(!showUI);
 
   const valuetext = (value) => setSize(value);  
 
@@ -49,7 +49,7 @@ export default function UI(props) {
                 valueLabelDisplay="auto"
                 step={10}
                 min={10}
-                max={100}
+                max={300}
               />
             </Box>
           </label>
@@ -60,12 +60,12 @@ export default function UI(props) {
                 size="small"
                 aria-label="Speed"
                 defaultValue={500}
-                getAriaValueText={speed}
+                 getAriaValueText={speed}
                 valueLabelDisplay="auto"
                 step={50}
                 dir="left"
                 min={1}
-                max={1000}
+                max={400}
               />
             </Box>
           </label>
@@ -90,11 +90,11 @@ export default function UI(props) {
             )}
           </Fab>
         </div>
-        <div>
+        {/* <div>
           <p>brush size:{brushSize}</p>
           <button onClick={(() => setBrushSize(prev => prev + 1) )}>+</button>
           <button onClick={(() => setBrushSize(prev => prev - 1) ) }>-</button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
